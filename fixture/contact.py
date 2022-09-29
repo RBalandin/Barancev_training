@@ -8,6 +8,8 @@ class ContactHelper:
 
     def return_to_the_home_page(self):
         wd = self.app.wd
+        if not wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_name("Send e-Mail")) > 0:
+            return
         wd.find_element_by_link_text("home").click()
 
     def create(self, contact):
@@ -100,3 +102,8 @@ class ContactHelper:
     def add_new_contact_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.return_to_the_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
